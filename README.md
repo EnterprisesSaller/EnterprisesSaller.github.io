@@ -19,32 +19,22 @@
         .container {
             text-align: center;
             position: relative;
-            width: 20vw; /* Maximale Containerbreite auf 20% gesetzt */
-            max-width: 20vw;
+            width: 80%; /* Container breiter gemacht, um Platz für Inhalte zu bieten */
+            max-width: 800px; /* Maximale Breite festgelegt, damit es auf großen Bildschirmen nicht zu breit wird */
             padding: 5vh 0;
-        }
-        h1 {
-            color: yellow;
-            font-family: 'Verdana', sans-serif;
-            font-size: 8vw; /* Schriftgröße passt sich an die Breite des Viewports an */
-            margin-bottom: 4vh;
         }
         .graphics {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 15vw; /* Flexiblere Breite */
-        }
-        .graphics.left {
-            left: 2vw;
-        }
-        .graphics.right {
-            right: 2vw;
+            top: -10vh; /* Bild über das Glücksrad setzen */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30vw; /* Breite des Bildes */
+            max-width: 150px; /* Maximale Breite des Bildes */
         }
         .wheel-container {
             position: relative;
-            width: 60vw; /* Flexibles Layout für das Rad */
-            height: 60vw;
+            width: 50vw; /* Flexibles Layout für das Rad */
+            height: 50vw;
             margin: 0 auto;
         }
         .wheel {
@@ -72,7 +62,7 @@
             transform: translate(-50%, -50%) rotate(-36deg);
             transform-origin: 0% 0%;
             text-align: center;
-            font-size: 4vw; /* Schriftgröße passt sich an die Breite des Viewports an */
+            font-size: 3.5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
             font-family: 'Verdana', sans-serif;
             font-weight: bold;
             color: white;
@@ -111,13 +101,13 @@
         }
         .timer {
             margin-top: 5vh;
-            font-size: 6vw; /* Schriftgröße passt sich an die Breite des Viewports an */
+            font-size: 5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
             color: yellow;
             display: none;
         }
         button {
             padding: 2vw 4vw;
-            font-size: 6vw; /* Schriftgröße passt sich an die Breite des Viewports an */
+            font-size: 5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
             background-color: #ff4d4d;
             color: white;
             border: none;
@@ -137,11 +127,10 @@
     </style>
 </head>
 <body>
-    <div class="graphics left">
-        <img src="2.jpg" alt="Linkes Bild" style="width: 100%;">
-    </div>
     <div class="container">
-        <h1>Saller Enterprises Wheel of Drinks</h1>
+        <div class="graphics">
+            <img src="2.jpg" alt="Bild" style="width: 100%;">
+        </div>
         <div class="wheel-container">
             <div class="pointer"></div>
             <div class="wheel" id="wheel">
@@ -164,9 +153,6 @@
         </div>
         <div class="timer" id="timer">9</div>
         <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
-    </div>
-    <div class="graphics right">
-        <img src="2.jpg" alt="Rechtes Bild" style="width: 100%;">
     </div>
 
     <script>
