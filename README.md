@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -14,9 +15,10 @@
         }
 
         img {
-            width: 100%;
-            max-width: 600px;
+            width: 150%; /* 50% größer */
+            max-width: 900px;
             height: auto;
+            margin-top: -20px; /* Weiter nach oben verschoben */
         }
 
         #game-container {
@@ -26,10 +28,11 @@
 
         #gluecksrad-container {
             position: relative;
-            width: 80%;
-            max-width: 250px;
-            height: 250px;
-            margin: 0 auto 20px auto;
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            margin-top: -40px; /* Weiter nach oben verschoben */
         }
 
         #gluecksrad {
@@ -38,60 +41,55 @@
             position: relative;
             border-radius: 50%;
             border: 5px solid white;
-            transition: transform 4s ease-out;
             transform: rotate(0deg);
+            overflow: hidden;
         }
 
         .segment {
             position: absolute;
             width: 50%;
             height: 50%;
-            top: 50%;
-            left: 50%;
-            transform-origin: 0% 0%;
             background-color: white;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+            clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+            transform-origin: 50% 50%;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             text-align: center;
+            color: white;
             font-size: 12px;
             font-weight: bold;
-            color: white;
-            padding: 5px;
-            border-radius: 50%; /* Optional, um die Segmente runder aussehen zu lassen */
         }
 
         .segment:nth-child(1) {
-            transform: rotate(0deg);
             background-color: red;
+            transform: rotate(0deg);
         }
 
         .segment:nth-child(2) {
-            transform: rotate(72deg);
             background-color: blue;
+            transform: rotate(72deg);
         }
 
         .segment:nth-child(3) {
-            transform: rotate(144deg);
             background-color: green;
+            transform: rotate(144deg);
         }
 
         .segment:nth-child(4) {
-            transform: rotate(216deg);
             background-color: yellow;
             color: black;
+            transform: rotate(216deg);
         }
 
         .segment:nth-child(5) {
-            transform: rotate(288deg);
             background-color: purple;
+            transform: rotate(288deg);
         }
 
         .segment span {
             transform: rotate(-36deg);
             display: block;
-            width: 100%;
         }
 
         #pointer {
@@ -101,7 +99,7 @@
             border-right: 15px solid transparent;
             border-top: 30px solid red;
             position: absolute;
-            top: -15px;
+            top: -20px;
             left: calc(50% - 15px);
             z-index: 1000;
         }
