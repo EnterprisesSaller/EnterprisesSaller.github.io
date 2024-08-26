@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -15,10 +15,10 @@
         }
 
         img {
-            width: 150%; /* 50% größer */
+            width: 150%;
             max-width: 900px;
             height: auto;
-            margin-top: 20px; /* Bild leicht nach unten verschoben */
+            margin-top: 20px;
         }
 
         #game-container {
@@ -30,29 +30,30 @@
         #pointer {
             width: 0;
             height: 0;
-            border-left: 22.5px solid transparent; /* Pfeil 50% größer */
-            border-right: 22.5px solid transparent; /* Pfeil 50% größer */
-            border-top: 45px solid red; /* Pfeil 50% größer */
+            border-left: 22.5px solid transparent;
+            border-right: 22.5px solid transparent;
+            border-top: 45px solid red;
             position: absolute;
-            top: -35px; /* Pfeil leicht über dem Rad */
-            left: calc(50% - 22.5px); /* An die Pfeilgröße angepasst */
+            top: -35px;
+            left: calc(50% - 22.5px);
             z-index: 1000;
         }
 
         #gluecksrad-container {
             position: relative;
             margin: 0 auto;
-            width: 95%; /* Rad größer gemacht */
-            max-width: 350px; /* Rad größer gemacht */
-            height: 350px; /* Rad größer gemacht */
+            width: 95%;
+            max-width: 350px;
+            height: 0;
+            padding-bottom: 95%; /* Sicherstellung, dass es ein perfekter Kreis bleibt */
             background-image: url('3.jpeg');
             background-size: cover;
             background-position: center;
             border-radius: 50%;
-            border: 2px solid white; /* Weißer Bereich um das Rad deutlich verkleinert */
+            border: 2px solid white;
             overflow: hidden;
             transition: transform 6s ease-out;
-            margin-top: -40px; /* Rad weiter nach oben verschoben */
+            margin-top: -40px;
         }
 
         .wuerfel-container {
