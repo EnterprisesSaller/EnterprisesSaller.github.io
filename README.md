@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -30,29 +30,29 @@
         #pointer {
             width: 0;
             height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 30px solid red; /* Pfeil zeigt nach unten */
+            border-left: 22.5px solid transparent; /* Pfeil 50% größer */
+            border-right: 22.5px solid transparent; /* Pfeil 50% größer */
+            border-top: 45px solid red; /* Pfeil 50% größer */
             position: absolute;
-            top: -20px; /* Pfeil leicht über dem Rad */
-            left: calc(50% - 15px);
+            top: -35px; /* Pfeil leicht über dem Rad */
+            left: calc(50% - 22.5px); /* An die Pfeilgröße angepasst */
             z-index: 1000;
         }
 
         #gluecksrad-container {
             position: relative;
             margin: 0 auto;
-            width: 90%; /* Rad größer gemacht */
-            max-width: 340px; /* Rad größer gemacht */
-            height: 340px; /* Rad größer gemacht */
+            width: 95%; /* Rad größer gemacht */
+            max-width: 350px; /* Rad größer gemacht */
+            height: 350px; /* Rad größer gemacht */
             background-image: url('3.jpeg');
             background-size: cover;
             background-position: center;
             border-radius: 50%;
-            border: 3px solid white; /* Weißer Bereich um das Rad verkleinert */
+            border: 2px solid white; /* Weißer Bereich um das Rad deutlich verkleinert */
             overflow: hidden;
             transition: transform 6s ease-out;
-            margin-top: 20px; /* Rad leicht nach oben verschoben */
+            margin-top: -40px; /* Rad weiter nach oben verschoben */
         }
 
         .wuerfel-container {
