@@ -25,11 +25,11 @@
         }
         .graphics {
             position: absolute;
-            top: -10vh; /* Bild über das Glücksrad setzen */
+            top: -20vh; /* Bild weiter nach oben verschieben */
             left: 50%;
             transform: translateX(-50%);
-            width: 30vw; /* Breite des Bildes */
-            max-width: 150px; /* Maximale Breite des Bildes */
+            width: 90vw; /* Bildgröße verdreifacht */
+            max-width: 450px; /* Maximale Breite des Bildes */
         }
         .wheel-container {
             position: relative;
