@@ -18,72 +18,29 @@
             width: 150%; /* 50% größer */
             max-width: 900px;
             height: auto;
-            margin-top: -20px; /* Weiter nach oben verschoben */
+            margin-top: 20px; /* Bild leicht nach unten verschoben */
         }
 
         #game-container {
-            margin-top: 10px;
+            margin-top: 20px;
             padding: 0 20px;
+            position: relative;
         }
 
         #gluecksrad-container {
             position: relative;
+            margin: 0 auto;
             width: 80%;
             max-width: 300px;
             height: 300px;
-            margin: 0 auto;
-            margin-top: -40px; /* Weiter nach oben verschoben */
-        }
-
-        #gluecksrad {
-            width: 100%;
-            height: 100%;
+            background-image: url('3.jpeg');
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
             border: 5px solid white;
-            position: relative;
             overflow: hidden;
-        }
-
-        .segment {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
-            transform-origin: 50% 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            color: white;
-            padding: 10px;
-        }
-
-        .segment:nth-child(1) {
-            background-color: red;
-            transform: rotate(0deg);
-        }
-
-        .segment:nth-child(2) {
-            background-color: blue;
-            transform: rotate(72deg);
-        }
-
-        .segment:nth-child(3) {
-            background-color: green;
-            transform: rotate(144deg);
-        }
-
-        .segment:nth-child(4) {
-            background-color: yellow;
-            color: black;
-            transform: rotate(216deg);
-        }
-
-        .segment:nth-child(5) {
-            background-color: purple;
-            transform: rotate(288deg);
+            transition: transform 6s ease-out;
+            margin-top: -30px; /* Rad nach oben verschoben */
         }
 
         #pointer {
@@ -91,9 +48,9 @@
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-top: 30px solid red;
+            border-bottom: 30px solid red; /* Pfeil zeigt nach unten */
             position: absolute;
-            top: -20px;
+            top: -40px; /* Pfeil über dem Rad */
             left: calc(50% - 15px);
             z-index: 1000;
         }
@@ -174,13 +131,6 @@
         
         <div id="gluecksrad-container">
             <div id="pointer"></div>
-            <div id="gluecksrad">
-                <div class="segment">ein Schnaps</div>
-                <div class="segment">zwei Schnaps</div>
-                <div class="segment">Milch 43</div>
-                <div class="segment">Boobs out!</div>
-                <div class="segment">Hüttchen</div>
-            </div>
         </div>
         <button class="btn" id="gluecksradBtn" onclick="dreheGluecksrad()">Spin the Wheel</button>
         
@@ -216,14 +166,13 @@
         let timer = null;
 
         function dreheGluecksrad() {
-            let rotation = Math.floor(Math.random() * 3600) + 360; // Mehrfache Umdrehungen für den Effekt
-            document.getElementById('gluecksrad').style.transform = 'rotate(' + rotation + 'deg)';
+            let rotation = Math.floor(Math.random() * 3600) + 720; // Mehrfache Umdrehungen für den Effekt
+            document.getElementById('gluecksrad-container').style.transform = 'rotate(' + rotation + 'deg)';
 
             setTimeout(function() {
-                segment = Math.floor(Math.random() * 5) + 1;
                 document.getElementById('gluecksradBtn').disabled = true;
                 document.getElementById('wuerfel1Btn').disabled = false;
-            }, 4000); // Zeit, bis das Glücksrad zum Stillstand kommt
+            }, 6000); // Zeit, bis das Glücksrad zum Stillstand kommt
         }
 
         function wuerfeln1() {
@@ -329,7 +278,7 @@
         }
 
         function resetGame() {
-            document.getElementById('gluecksrad').style.transform = 'rotate(0deg)';
+            document.getElementById('gluecksrad-container').style.transform = 'rotate(0deg)';
             document.getElementById('dots1-1').innerHTML = '';
             document.getElementById('dots1-2').innerHTML = '';
             document.getElementById('dots2-1').innerHTML = '';
