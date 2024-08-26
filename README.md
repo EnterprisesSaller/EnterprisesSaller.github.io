@@ -1,51 +1,47 @@
-<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saller Enterprises Wheel of Drinks</title>
+    <title>Partyspiel für 2 Spieler</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
             background-color: black;
             color: white;
-            overflow: hidden;
-        }
-        .container {
+            font-family: Arial, sans-serif;
             text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        #game-container {
+            margin-top: 10px;
+            padding: 0 20px;
+        }
+
+        #gluecksrad-container {
             position: relative;
             width: 80%;
-            max-width: 800px;
-            padding: 5vh 0;
+            max-width: 250px;
+            height: 250px;
+            margin: 0 auto 20px auto;
         }
-        .graphics {
-            position: relative;
-            top: -15vh; /* Bild nach oben verschoben */
-            width: 55vw; /* Bildgröße um 10% vergrößert */
-            max-width: 330px; /* Maximale Breite des Bildes */
-            margin: 0 auto;
-        }
-        .wheel-container {
-            position: relative;
-            width: 50vw; /* Flexibles Layout für das Rad */
-            height: 50vw;
-            margin: 0 auto;
-        }
-        .wheel {
+
+        #gluecksrad {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            background-color: #444444;
-            border: 2vw solid #ff6600;
             position: relative;
-            box-shadow: 0 0 2vw rgba(255, 102, 0, 0.8);
+            border-radius: 50%;
+            border: 5px solid white;
+            transition: transform 4s ease-out;
+            transform: rotate(0deg);
         }
+
         .segment {
             position: absolute;
             width: 50%;
@@ -53,169 +49,303 @@
             top: 50%;
             left: 50%;
             transform-origin: 0% 0%;
-            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
-        }
-        .segment-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            transform-origin: 0% 0%;
+            background-color: white;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            font-size: 3.5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
-            font-family: 'Verdana', sans-serif;
+            font-size: 12px;
             font-weight: bold;
             color: white;
+            padding: 5px;
+            border-radius: 50%; /* Optional, um die Segmente runder aussehen zu lassen */
         }
-        /* Segment Styles */
+
         .segment:nth-child(1) {
-            background-color: #ff6666;
             transform: rotate(0deg);
-            clip-path: polygon(0% 0%, 100% 0%, 30% 100%);
+            background-color: red;
         }
+
         .segment:nth-child(2) {
-            background-color: #ff3333;
-            transform: rotate(36deg);
-            clip-path: polygon(0% 0%, 100% 0%, 30% 100%);
-        }
-        .segment:nth-child(3) {
-            background-color: #66b3ff;
             transform: rotate(72deg);
+            background-color: blue;
         }
-        .segment:nth-child(4) {
-            background-color: #85e085;
+
+        .segment:nth-child(3) {
             transform: rotate(144deg);
+            background-color: green;
         }
-        .segment:nth-child(5) {
-            background-color: #ffcc66;
+
+        .segment:nth-child(4) {
             transform: rotate(216deg);
+            background-color: yellow;
+            color: black;
         }
-        .segment:nth-child(6) {
-            background-color: #ffa07a;
-            transform: rotate(252deg);
-            clip-path: polygon(0% 0%, 100% 0%, 30% 100%);
-        }
-        .segment:nth-child(7) {
-            background-color: #ff69b4;
+
+        .segment:nth-child(5) {
             transform: rotate(288deg);
+            background-color: purple;
         }
-        .pointer {
-            position: absolute;
-            top: -5vw;
-            left: 50%;
+
+        .segment span {
+            transform: rotate(-36deg);
+            display: block;
+            width: 100%;
+        }
+
+        #pointer {
             width: 0;
             height: 0;
-            border-left: 3vw solid transparent;
-            border-right: 3vw solid transparent;
-            border-bottom: 6vw solid #ff4d4d;
-            transform: translateX(-50%) rotate(180deg);
-            z-index: 20;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid red;
+            position: absolute;
+            top: -15px;
+            left: calc(50% - 15px);
+            z-index: 1000;
         }
-        .timer {
-            margin-top: 5vh;
-            font-size: 5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
-            color: yellow;
-            display: none;
+
+        .wuerfel-container {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
         }
-        button {
-            padding: 2vw 4vw;
-            font-size: 5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
-            background-color: #ff4d4d;
+
+        .wuerfel {
+            width: 60px;
+            height: 60px;
+            margin: 10px;
+            background-color: white;
+            color: black;
+            font-size: 24px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 10px;
+            border: 2px solid black;
+        }
+
+        .dots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            border-radius: 50%;
+            place-self: center;
+        }
+
+        #result {
+            margin: 20px auto;
+            font-size: 16px;
+        }
+
+        .btn {
+            background-color: #555;
             color: white;
+            padding: 10px 20px;
             border: none;
-            border-radius: 2vw;
             cursor: pointer;
-            margin-top: 5vh;
-            box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 200px;
         }
-        button:disabled {
-            background-color: #ccc;
+
+        .btn:disabled {
+            background-color: #333;
             cursor: not-allowed;
-            box-shadow: none;
         }
-        button:hover:enabled {
-            background-color: #ff3333;
+
+        .btn:hover:not(:disabled) {
+            background-color: #777;
+        }
+
+        #timer {
+            font-size: 18px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="graphics">
-            <img src="2.jpg" alt="Bild" style="width: 100%;">
-        </div>
-        <div class="wheel-container">
-            <div class="pointer"></div>
-            <div class="wheel" id="wheel">
-                <div class="segment" style="transform: rotate(0deg);">
-                    <div class="segment-label">Hüttchen</div>
-                </div>
-                <div class="segment" style="transform: rotate(36deg);">
-                    <div class="segment-label">Show Boobs!</div>
-                </div>
-                <div class="segment" style="transform: rotate(72deg);">
-                    <div class="segment-label">2 Schnaps</div>
-                </div>
-                <div class="segment" style="transform: rotate(144deg);">
-                    <div class="segment-label">Schnaps</div>
-                </div>
-                <div class="segment" style="transform: rotate(216deg);">
-                    <div class="segment-label">Milch 43</div>
-                </div>
-                <div class="segment" style="transform: rotate(252deg);">
-                    <div class="segment-label">Wasser</div>
-                </div>
-                <div class="segment" style="transform: rotate(288deg);">
-                    <div class="segment-label">5€ fürs Team</div>
-                </div>
+
+    <img src="2.jpg" alt="Bildname 2" id="header-img">
+
+    <div id="game-container">
+        
+        <div id="gluecksrad-container">
+            <div id="pointer"></div>
+            <div id="gluecksrad">
+                <div class="segment"><span>ein Schnaps</span></div>
+                <div class="segment"><span>zwei Schnaps</span></div>
+                <div class="segment"><span>Milch 43</span></div>
+                <div class="segment"><span>Boobs out!</span></div>
+                <div class="segment"><span>Hüttchen</span></div>
             </div>
         </div>
-        <div class="timer" id="timer">9</div>
-        <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
+        <button class="btn" id="gluecksradBtn" onclick="dreheGluecksrad()">Spin the Wheel</button>
+        
+        <div class="wuerfel-container">
+            <div class="wuerfel" id="wuerfel1-1">
+                <div class="dots" id="dots1-1"></div>
+            </div>
+            <div class="wuerfel" id="wuerfel1-2">
+                <div class="dots" id="dots1-2"></div>
+            </div>
+        </div>
+        <button class="btn" id="wuerfel1Btn" onclick="wuerfeln1()" disabled>Roll</button>
+        
+        <div class="wuerfel-container">
+            <div class="wuerfel" id="wuerfel2-1">
+                <div class="dots" id="dots2-1"></div>
+            </div>
+            <div class="wuerfel" id="wuerfel2-2">
+                <div class="dots" id="dots2-2"></div>
+            </div>
+        </div>
+        <button class="btn" id="wuerfel2Btn" onclick="wuerfeln2()" disabled>Roll</button>
+        
+        <div id="result">Wer gewinnt?</div>
+        
+        <div id="timer"></div>
     </div>
 
     <script>
-        const segments = ["Hüttchen", "Show Boobs!", "2 Schnaps", "Schnaps", "Milch 43", "Wasser", "5€ fürs Team"];
-        const timerElement = document.getElementById('timer');
+        let segment = 0;
+        let player1Result = 0;
+        let player2Result = 0;
+        let timer = null;
 
-        function spinWheel() {
-            const wheel = document.getElementById('wheel');
-            const spinButton = document.getElementById('spinButton');
+        function dreheGluecksrad() {
+            let rotation = Math.floor(Math.random() * 3600) + 360; // Mehrfache Umdrehungen für den Effekt
+            document.getElementById('gluecksrad').style.transform = 'rotate(' + rotation + 'deg)';
 
-            spinButton.disabled = true;
+            setTimeout(function() {
+                segment = Math.floor(Math.random() * 5) + 1;
+                document.getElementById('gluecksradBtn').disabled = true;
+                document.getElementById('wuerfel1Btn').disabled = false;
+            }, 4000); // Zeit, bis das Glücksrad zum Stillstand kommt
+        }
 
-            const startRotation = Math.floor(Math.random() * 360);
-            wheel.style.transform = `rotate(${startRotation}deg)`;
-            wheel.style.transition = 'none';
+        function wuerfeln1() {
+            animateDice('wuerfel1-1', 'dots1-1');
+            animateDice('wuerfel1-2', 'dots1-2', function() {
+                player1Result = showDiceResult('wuerfel1-1', 'dots1-1') + showDiceResult('wuerfel1-2', 'dots1-2');
+                document.getElementById('wuerfel1Btn').disabled = true;
+                document.getElementById('wuerfel2Btn').disabled = false;
+            });
+        }
 
-            setTimeout(() => {
-                const initialRotation = -180 * 5;
-                const slowRotation = -360 * 2;
-                const randomStop = Math.floor(Math.random() * 800) + 200;
-                const totalRotation = startRotation + initialRotation + slowRotation;
-                const duration = 5 + randomStop / 1000;
+        function wuerfeln2() {
+            animateDice('wuerfel2-1', 'dots2-1');
+            animateDice('wuerfel2-2', 'dots2-2', function() {
+                player2Result = showDiceResult('wuerfel2-1', 'dots2-1') + showDiceResult('wuerfel2-2', 'dots2-2');
+                document.getElementById('wuerfel2Btn').disabled = true;
+                zeigeErgebnis();
+            });
+        }
 
-                wheel.style.transition = `transform ${duration}s ease-out`;
-                wheel.style.transform = `rotate(${totalRotation}deg)`;
+        function animateDice(wuerfelId, dotsId, callback) {
+            let iterations = 30;
+            let interval = setInterval(function() {
+                showRandomDots(dotsId);
+                iterations--;
+                if (iterations <= 0) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, 100); // Schnelle Änderung für 3 Sekunden (30 Iterationen à 100ms)
+        }
 
-                setTimeout(() => {
-                    let remainingTime = 9;
-                    timerElement.style.display = 'block';
+        function showRandomDots(dotsId) {
+            const patterns = [
+                [4], // 1
+                [0, 8], // 2
+                [0, 4, 8], // 3
+                [0, 2, 6, 8], // 4
+                [0, 2, 4, 6, 8], // 5
+                [0, 1, 2, 6, 7, 8] // 6
+            ];
+            const randomPattern = patterns[Math.floor(Math.random() * 6)];
+            const dots = document.getElementById(dotsId);
+            dots.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const dot = document.createElement('div');
+                if (randomPattern.includes(i)) dot.className = 'dot';
+                dots.appendChild(dot);
+            }
+        }
 
-                    const countdownInterval = setInterval(() => {
-                        remainingTime--;
-                        if (remainingTime <= 0) {
-                            clearInterval(countdownInterval);
-                            timerElement.style.display = 'none';
-                        } else {
-                            timerElement.innerText = remainingTime;
-                        }
-                    }, 1000);
+        function showDiceResult(wuerfelId, dotsId) {
+            const dots = document.getElementById(dotsId);
+            const result = Math.floor(Math.random() * 6) + 1;
+            dots.innerHTML = '';
+            const patterns = [
+                [4], // 1
+                [0, 8], // 2
+                [0, 4, 8], // 3
+                [0, 2, 6, 8], // 4
+                [0, 2, 4, 6, 8], // 5
+                [0, 1, 2, 6, 7, 8] // 6
+            ];
+            const finalPattern = patterns[result - 1];
+            for (let i = 0; i < 9; i++) {
+                const dot = document.createElement('div');
+                if (finalPattern.includes(i)) dot.className = 'dot';
+                dots.appendChild(dot);
+            }
+            return result;
+        }
 
-                    setTimeout(() => {
-                        spinButton.disabled = false;
-                    }, 9000);
-                }, duration * 1000);
-            }, 50);
+        function zeigeErgebnis() {
+            let resultText = '';
+            if (player1Result > player2Result) {
+                resultText = 'Spieler 1 gewinnt!';
+                startTimer();
+            } else if (player1Result < player2Result) {
+                resultText = 'Spieler 2 gewinnt!';
+                startTimer();
+            } else {
+                resultText = 'Unentschieden! Nochmal würfeln!';
+                document.getElementById('wuerfel1Btn').disabled = false;
+                document.getElementById('wuerfel2Btn').disabled = true;
+            }
+            document.getElementById('result').textContent = resultText;
+        }
+
+        function startTimer() {
+            let countdown = 9;
+            document.getElementById('timer').textContent = 'Nächstes Spiel in: ' + countdown + ' Sekunden';
+            
+            timer = setInterval(function() {
+                countdown--;
+                if (countdown > 0) {
+                    document.getElementById('timer').textContent = 'Nächstes Spiel in: ' + countdown + ' Sekunden';
+                } else {
+                    clearInterval(timer);
+                    document.getElementById('timer').textContent = '';
+                    resetGame();
+                }
+            }, 1000);
+        }
+
+        function resetGame() {
+            document.getElementById('gluecksrad').style.transform = 'rotate(0deg)';
+            document.getElementById('dots1-1').innerHTML = '';
+            document.getElementById('dots1-2').innerHTML = '';
+            document.getElementById('dots2-1').innerHTML = '';
+            document.getElementById('dots2-2').innerHTML = '';
+            document.getElementById('result').textContent = 'Wer gewinnt?';
+            document.getElementById('gluecksradBtn').disabled = false;
+            document.getElementById('wuerfel1Btn').disabled = true;
+            document.getElementById('wuerfel2Btn').disabled = true;
         }
     </script>
 </body>
