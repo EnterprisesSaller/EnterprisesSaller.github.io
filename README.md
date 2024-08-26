@@ -28,7 +28,7 @@
 
         #gluecksrad-container {
             position: relative;
-            width: 100%;
+            width: 80%;
             max-width: 300px;
             height: 300px;
             margin: 0 auto;
@@ -38,27 +38,26 @@
         #gluecksrad {
             width: 100%;
             height: 100%;
-            position: relative;
             border-radius: 50%;
             border: 5px solid white;
-            transform: rotate(0deg);
+            position: relative;
             overflow: hidden;
         }
 
         .segment {
             position: absolute;
-            width: 50%;
-            height: 50%;
-            background-color: white;
+            width: 100%;
+            height: 100%;
             clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
             transform-origin: 50% 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
             text-align: center;
             color: white;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 10px;
         }
 
         .segment:nth-child(1) {
@@ -85,11 +84,6 @@
         .segment:nth-child(5) {
             background-color: purple;
             transform: rotate(288deg);
-        }
-
-        .segment span {
-            transform: rotate(-36deg);
-            display: block;
         }
 
         #pointer {
@@ -181,11 +175,11 @@
         <div id="gluecksrad-container">
             <div id="pointer"></div>
             <div id="gluecksrad">
-                <div class="segment"><span>ein Schnaps</span></div>
-                <div class="segment"><span>zwei Schnaps</span></div>
-                <div class="segment"><span>Milch 43</span></div>
-                <div class="segment"><span>Boobs out!</span></div>
-                <div class="segment"><span>Hüttchen</span></div>
+                <div class="segment">ein Schnaps</div>
+                <div class="segment">zwei Schnaps</div>
+                <div class="segment">Milch 43</div>
+                <div class="segment">Boobs out!</div>
+                <div class="segment">Hüttchen</div>
             </div>
         </div>
         <button class="btn" id="gluecksradBtn" onclick="dreheGluecksrad()">Spin the Wheel</button>
@@ -319,7 +313,7 @@
         }
 
         function startTimer() {
-            let countdown = 9;
+            let countdown = 19;  // Timer auf 19 Sekunden eingestellt
             document.getElementById('timer').textContent = 'Nächstes Spiel in: ' + countdown + ' Sekunden';
             
             timer = setInterval(function() {
