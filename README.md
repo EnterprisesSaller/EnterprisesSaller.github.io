@@ -20,14 +20,15 @@
         .container {
             text-align: center;
             position: relative;
-            padding: 20px;
-            max-width: 100%;
+            width: 20vw; /* Maximale Containerbreite auf 20% gesetzt */
+            max-width: 20vw;
+            padding: 5vh 0;
         }
         h1 {
             color: yellow;
             font-family: 'Verdana', sans-serif;
-            font-size: 5vw; /* Responsive Schriftgröße */
-            margin-bottom: 5vh;
+            font-size: 8vw; /* Schriftgröße passt sich an die Breite des Viewports an */
+            margin-bottom: 4vh;
         }
         .graphics {
             position: absolute;
@@ -36,15 +37,15 @@
             width: 15vw; /* Flexiblere Breite */
         }
         .graphics.left {
-            left: 5vw; /* Anpassung der Position */
+            left: 2vw;
         }
         .graphics.right {
-            right: 5vw;
+            right: 2vw;
         }
         .wheel-container {
             position: relative;
-            width: 70vw; /* Flexibles Layout für das Rad */
-            height: 70vw;
+            width: 60vw; /* Flexibles Layout für das Rad */
+            height: 60vw;
             margin: 0 auto;
         }
         .wheel {
@@ -52,9 +53,9 @@
             height: 100%;
             border-radius: 50%;
             background-color: #444444;
-            border: 10px solid #ff6600;
+            border: 2vw solid #ff6600;
             position: relative;
-            box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+            box-shadow: 0 0 2vw rgba(255, 102, 0, 0.8);
         }
         .segment {
             position: absolute;
@@ -72,7 +73,7 @@
             transform: translate(-50%, -50%) rotate(-36deg);
             transform-origin: 0% 0%;
             text-align: center;
-            font-size: 3vw; /* Responsive Schriftgröße */
+            font-size: 4vw; /* Schriftgröße passt sich an die Breite des Viewports an */
             font-family: 'Verdana', sans-serif;
             font-weight: bold;
             color: white;
@@ -103,28 +104,28 @@
             left: 50%;
             width: 0; 
             height: 0; 
-            border-left: 4vw solid transparent;
-            border-right: 4vw solid transparent;
-            border-bottom: 8vw solid #ff4d4d;
+            border-left: 3vw solid transparent;
+            border-right: 3vw solid transparent;
+            border-bottom: 6vw solid #ff4d4d;
             transform: translateX(-50%) rotate(180deg);
             z-index: 20;
         }
         .timer {
-            margin-top: 5vh; /* Flexible Abstände */
-            font-size: 4vw; /* Responsive Schriftgröße */
+            margin-top: 5vh;
+            font-size: 6vw; /* Schriftgröße passt sich an die Breite des Viewports an */
             color: yellow;
             display: none;
         }
         button {
             padding: 2vw 4vw;
-            font-size: 4vw; /* Responsive Schriftgröße */
+            font-size: 6vw; /* Schriftgröße passt sich an die Breite des Viewports an */
             background-color: #ff4d4d;
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 2vw;
             cursor: pointer;
-            margin-top: 5vh; /* Flexible Abstände */
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 5vh;
+            box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.5);
         }
         button:disabled {
             background-color: #ccc;
@@ -134,36 +135,11 @@
         button:hover:enabled {
             background-color: #ff3333;
         }
-
-        /* Medienabfragen für sehr kleine Bildschirme */
-        @media (max-width: 400px) {
-            .graphics {
-                width: 20vw; /* Kleinere Bilder auf sehr kleinen Bildschirmen */
-            }
-            h1 {
-                font-size: 7vw; /* Größere Schrift für Titel */
-            }
-            .wheel-container {
-                width: 80vw;
-                height: 80vw;
-            }
-            button {
-                font-size: 6vw; /* Größerer Button */
-            }
-            .timer {
-                font-size: 5vw; /* Größerer Timer */
-            }
-            .pointer {
-                border-left: 3vw solid transparent;
-                border-right: 3vw solid transparent;
-                border-bottom: 6vw solid #ff4d4d;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="graphics left">
-        <img src="2.jpg" alt="Linkes Bild">
+        <img src="2.jpg" alt="Linkes Bild" style="width: 100%;">
     </div>
     <div class="container">
         <h1>Saller Enterprises Wheel of Drinks</h1>
@@ -191,7 +167,7 @@
         <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
     </div>
     <div class="graphics right">
-        <img src="2.jpg" alt="Rechtes Bild">
+        <img src="2.jpg" alt="Rechtes Bild" style="width: 100%;">
     </div>
 
     <script>
