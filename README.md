@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -7,41 +8,43 @@
         body {
             font-family: 'Arial', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             background-color: black;
             color: white;
+            overflow: hidden;
         }
         .container {
             text-align: center;
             position: relative;
             padding: 20px;
-            top: -10px;
+            max-width: 100%;
         }
         h1 {
             color: yellow;
             font-family: 'Verdana', sans-serif;
-            font-size: 48px;
-            margin-bottom: 50px;
+            font-size: 5vw; /* Responsive Schriftgröße */
+            margin-bottom: 5vh;
         }
         .graphics {
             position: absolute;
-            top: 55%;
+            top: 50%;
             transform: translateY(-50%);
-            width: 340px;
+            width: 15vw; /* Flexiblere Breite */
         }
         .graphics.left {
-            left: 150px; /* Bilder weiter zur Mitte verschieben */
+            left: 5vw; /* Anpassung der Position */
         }
         .graphics.right {
-            right: 150px; /* Bilder weiter zur Mitte verschieben */
+            right: 5vw;
         }
         .wheel-container {
             position: relative;
-            width: 350px;
-            height: 350px;
+            width: 70vw; /* Flexibles Layout für das Rad */
+            height: 70vw;
             margin: 0 auto;
         }
         .wheel {
@@ -49,7 +52,7 @@
             height: 100%;
             border-radius: 50%;
             background-color: #444444;
-            border: 15px solid #ff6600; /* Kräftigerer Rand */
+            border: 10px solid #ff6600;
             position: relative;
             box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
         }
@@ -69,7 +72,7 @@
             transform: translate(-50%, -50%) rotate(-36deg);
             transform-origin: 0% 0%;
             text-align: center;
-            font-size: 18px;
+            font-size: 3vw; /* Responsive Schriftgröße */
             font-family: 'Verdana', sans-serif;
             font-weight: bold;
             color: white;
@@ -96,31 +99,31 @@
         }
         .pointer {
             position: absolute;
-            top: -40px;
+            top: -5vw;
             left: 50%;
             width: 0; 
             height: 0; 
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 40px solid #ff4d4d; /* Auffälliger, größerer Pfeil */
+            border-left: 4vw solid transparent;
+            border-right: 4vw solid transparent;
+            border-bottom: 8vw solid #ff4d4d;
             transform: translateX(-50%) rotate(180deg);
             z-index: 20;
         }
         .timer {
-            margin-top: 40px; /* Timer leicht nach unten verschieben */
-            font-size: 24px;
+            margin-top: 5vh; /* Flexible Abstände */
+            font-size: 4vw; /* Responsive Schriftgröße */
             color: yellow;
             display: none;
         }
         button {
-            padding: 15px 30px;
-            font-size: 22px;
+            padding: 2vw 4vw;
+            font-size: 4vw; /* Responsive Schriftgröße */
             background-color: #ff4d4d;
             color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            margin-top: 50px;
+            margin-top: 5vh; /* Flexible Abstände */
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
         }
         button:disabled {
@@ -131,11 +134,36 @@
         button:hover:enabled {
             background-color: #ff3333;
         }
+
+        /* Medienabfragen für sehr kleine Bildschirme */
+        @media (max-width: 400px) {
+            .graphics {
+                width: 20vw; /* Kleinere Bilder auf sehr kleinen Bildschirmen */
+            }
+            h1 {
+                font-size: 7vw; /* Größere Schrift für Titel */
+            }
+            .wheel-container {
+                width: 80vw;
+                height: 80vw;
+            }
+            button {
+                font-size: 6vw; /* Größerer Button */
+            }
+            .timer {
+                font-size: 5vw; /* Größerer Timer */
+            }
+            .pointer {
+                border-left: 3vw solid transparent;
+                border-right: 3vw solid transparent;
+                border-bottom: 6vw solid #ff4d4d;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="graphics left">
-        <img src="2.jpg" alt="Linkes Bild" width="340">
+        <img src="2.jpg" alt="Linkes Bild">
     </div>
     <div class="container">
         <h1>Saller Enterprises Wheel of Drinks</h1>
@@ -159,11 +187,11 @@
                 </div>
             </div>
         </div>
-        <div class="timer" id="timer">9</div> <!-- Timeranzeige -->
+        <div class="timer" id="timer">9</div>
         <button id="spinButton" onclick="spinWheel()">Spin the Wheel</button>
     </div>
     <div class="graphics right">
-        <img src="2.jpg" alt="Rechtes Bild" width="340">
+        <img src="2.jpg" alt="Rechtes Bild">
     </div>
 
     <script>
@@ -174,46 +202,41 @@
             const wheel = document.getElementById('wheel');
             const spinButton = document.getElementById('spinButton');
 
-            // Deaktiviert den Button, während das Rad sich dreht
             spinButton.disabled = true;
 
-            // Zufällige Startposition für jede Drehung
             const startRotation = Math.floor(Math.random() * 360);
             wheel.style.transform = `rotate(${startRotation}deg)`;
             wheel.style.transition = 'none';
 
             setTimeout(() => {
-                const initialRotation = -180 * 5; // Halbe Geschwindigkeit für die ersten 5 Sekunden
-                const slowRotation = -360 * 2; // Verlangsamt bis 0,5 RPM über 5 Sekunden
-                const randomStop = Math.floor(Math.random() * 800) + 200; // Zufälliger Stopp
+                const initialRotation = -180 * 5;
+                const slowRotation = -360 * 2;
+                const randomStop = Math.floor(Math.random() * 800) + 200;
                 const totalRotation = startRotation + initialRotation + slowRotation;
                 const duration = 5 + randomStop / 1000;
 
-                // Setzt die Rotation und die Übergangsdauer
                 wheel.style.transition = `transform ${duration}s ease-out`;
                 wheel.style.transform = `rotate(${totalRotation}deg)`;
 
-                // Sobald das Rad zum Stillstand kommt, wird der Timer gestartet
                 setTimeout(() => {
                     let remainingTime = 9;
-                    timerElement.style.display = 'block'; // Timer anzeigen
+                    timerElement.style.display = 'block';
 
                     const countdownInterval = setInterval(() => {
                         remainingTime--;
                         if (remainingTime <= 0) {
                             clearInterval(countdownInterval);
-                            timerElement.style.display = 'none'; // Blendet den Timer bei 0 aus
+                            timerElement.style.display = 'none';
                         } else {
                             timerElement.innerText = remainingTime;
                         }
                     }, 1000);
 
-                    // Button nach 9 Sekunden wieder aktivieren
                     setTimeout(() => {
                         spinButton.disabled = false;
                     }, 9000);
                 }, duration * 1000);
-            }, 50); // Kurze Verzögerung, um das Zurücksetzen der Transition zu ermöglichen
+            }, 50);
         }
     </script>
 </body>
