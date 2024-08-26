@@ -27,32 +27,32 @@
             position: relative;
         }
 
-        #gluecksrad-container {
-            position: relative;
-            margin: 0 auto;
-            width: 80%;
-            max-width: 300px;
-            height: 300px;
-            background-image: url('3.jpeg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
-            border: 5px solid white;
-            overflow: hidden;
-            transition: transform 6s ease-out;
-            margin-top: -30px; /* Rad nach oben verschoben */
-        }
-
         #pointer {
             width: 0;
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-bottom: 30px solid red; /* Pfeil zeigt nach unten */
+            border-top: 30px solid red; /* Pfeil zeigt nach unten */
             position: absolute;
-            top: -40px; /* Pfeil über dem Rad */
+            top: -20px; /* Pfeil leicht über dem Rad */
             left: calc(50% - 15px);
             z-index: 1000;
+        }
+
+        #gluecksrad-container {
+            position: relative;
+            margin: 0 auto;
+            width: 90%; /* Rad größer gemacht */
+            max-width: 340px; /* Rad größer gemacht */
+            height: 340px; /* Rad größer gemacht */
+            background-image: url('3.jpeg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            border: 3px solid white; /* Weißer Bereich um das Rad verkleinert */
+            overflow: hidden;
+            transition: transform 6s ease-out;
+            margin-top: 20px; /* Rad leicht nach oben verschoben */
         }
 
         .wuerfel-container {
@@ -129,9 +129,10 @@
 
     <div id="game-container">
         
-        <div id="gluecksrad-container">
-            <div id="pointer"></div>
-        </div>
+        <div id="pointer"></div> <!-- Feststehender Pfeil -->
+        
+        <div id="gluecksrad-container"></div> <!-- Glücksrad-Container -->
+        
         <button class="btn" id="gluecksradBtn" onclick="dreheGluecksrad()">Spin the Wheel</button>
         
         <div class="wuerfel-container">
