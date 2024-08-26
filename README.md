@@ -26,14 +26,14 @@
         }
         .graphics {
             position: relative;
-            top: -15vh; /* Bild nach oben verschoben */
+            top: -15vh;
             width: 55vw; /* Bildgröße um 10% vergrößert */
             max-width: 330px; /* Maximale Breite des Bildes */
             margin: 0 auto;
         }
         .wheel-container {
             position: relative;
-            width: 50vw; /* Flexibles Layout für das Rad */
+            width: 50vw;
             height: 50vw;
             margin: 0 auto;
         }
@@ -59,32 +59,39 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
+            transform: translate(-50%, -50%);
             transform-origin: 0% 0%;
             text-align: center;
-            font-size: 3.5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
+            font-size: 3.5vw;
             font-family: 'Verdana', sans-serif;
             font-weight: bold;
             color: white;
         }
+
         /* Segment Styles */
+        .segment-small {
+            clip-path: polygon(0% 0%, 100% 0%, 30% 100%);
+        }
+
+        .segment-large {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+        }
+
         .segment:nth-child(1) {
             background-color: #ff6666;
             transform: rotate(0deg);
-            clip-path: polygon(0% 0%, 100% 0%, 30% 100%);
         }
         .segment:nth-child(2) {
             background-color: #ff3333;
-            transform: rotate(36deg);
-            clip-path: polygon(0% 0%, 100% 0%, 30% 100%);
+            transform: rotate(54deg);
         }
         .segment:nth-child(3) {
             background-color: #66b3ff;
-            transform: rotate(72deg);
+            transform: rotate(108deg);
         }
         .segment:nth-child(4) {
             background-color: #85e085;
-            transform: rotate(144deg);
+            transform: rotate(162deg);
         }
         .segment:nth-child(5) {
             background-color: #ffcc66;
@@ -92,12 +99,11 @@
         }
         .segment:nth-child(6) {
             background-color: #ffa07a;
-            transform: rotate(252deg);
-            clip-path: polygon(0% 0%, 100% 0%, 30% 100%);
+            transform: rotate(270deg);
         }
         .segment:nth-child(7) {
             background-color: #ff69b4;
-            transform: rotate(288deg);
+            transform: rotate(324deg);
         }
         .pointer {
             position: absolute;
@@ -113,13 +119,13 @@
         }
         .timer {
             margin-top: 5vh;
-            font-size: 5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
+            font-size: 5vw;
             color: yellow;
             display: none;
         }
         button {
             padding: 2vw 4vw;
-            font-size: 5vw; /* Schriftgröße passt sich an die Breite des Viewports an */
+            font-size: 5vw;
             background-color: #ff4d4d;
             color: white;
             border: none;
@@ -146,25 +152,25 @@
         <div class="wheel-container">
             <div class="pointer"></div>
             <div class="wheel" id="wheel">
-                <div class="segment" style="transform: rotate(0deg);">
-                    <div class="segment-label">Hüttchen</div>
-                </div>
-                <div class="segment" style="transform: rotate(36deg);">
+                <div class="segment segment-small" style="transform: rotate(0deg);">
                     <div class="segment-label">Show Boobs!</div>
                 </div>
-                <div class="segment" style="transform: rotate(72deg);">
+                <div class="segment segment-large" style="transform: rotate(36deg);">
                     <div class="segment-label">2 Schnaps</div>
                 </div>
-                <div class="segment" style="transform: rotate(144deg);">
+                <div class="segment segment-large" style="transform: rotate(108deg);">
                     <div class="segment-label">Schnaps</div>
                 </div>
-                <div class="segment" style="transform: rotate(216deg);">
+                <div class="segment segment-large" style="transform: rotate(180deg);">
                     <div class="segment-label">Milch 43</div>
                 </div>
-                <div class="segment" style="transform: rotate(252deg);">
+                <div class="segment segment-large" style="transform: rotate(252deg);">
+                    <div class="segment-label">Hüttchen</div>
+                </div>
+                <div class="segment segment-small" style="transform: rotate(324deg);">
                     <div class="segment-label">Wasser</div>
                 </div>
-                <div class="segment" style="transform: rotate(288deg);">
+                <div class="segment segment-small" style="transform: rotate(360deg);">
                     <div class="segment-label">5€ fürs Team</div>
                 </div>
             </div>
@@ -174,7 +180,7 @@
     </div>
 
     <script>
-        const segments = ["Hüttchen", "Show Boobs!", "2 Schnaps", "Schnaps", "Milch 43", "Wasser", "5€ fürs Team"];
+        const segments = ["Show Boobs!", "2 Schnaps", "Schnaps", "Milch 43", "Hüttchen", "Wasser", "5€ fürs Team"];
         const timerElement = document.getElementById('timer');
 
         function spinWheel() {
