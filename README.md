@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -11,17 +12,23 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         #game-container {
             margin-top: 20px;
             padding: 0 20px;
             position: relative;
+            text-align: center;
         }
 
         #header-img {
-            width: 150%; /* Vergrößerung um 50% */
-            max-width: 600px; /* Neue Maximalbreite */
+            width: 120%; /* Verkleinerung um 20% von vorheriger Größe */
+            max-width: 480px;
             height: auto;
             margin-top: 20px;
         }
@@ -30,7 +37,7 @@
             position: relative;
             margin-top: 20px;
             width: 80%;
-            max-width: 300px;
+            max-width: 280px; /* Rad etwas verkleinert */
             height: auto;
             margin: 0 auto;
         }
@@ -47,7 +54,7 @@
             border-right: 15px solid transparent;
             border-top: 30px solid red; /* Spitze nach unten */
             position: absolute;
-            top: -25px; /* Näher an das Rad heran */
+            top: -35px; /* Näher an das Rad heran */
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
