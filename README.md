@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -14,13 +14,6 @@
             padding: 0;
         }
 
-        img {
-            width: 150%;
-            max-width: 900px;
-            height: auto;
-            margin-top: 20px;
-        }
-
         #game-container {
             margin-top: 20px;
             padding: 0 20px;
@@ -34,35 +27,31 @@
             margin-top: 20px;
         }
 
-        #gluecksrad-bild {
+        #gluecksrad-container {
+            position: relative;
+            margin-top: 20px;
             width: 80%;
             max-width: 300px;
             height: auto;
-            border-radius: 50%;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
+            margin: 0 auto;
         }
 
-        #pointer-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+        #gluecksrad-bild {
             width: 100%;
-            height: 100%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            pointer-events: none;
+            border-radius: 50%;
         }
 
-        #pointer {
+        #fixed-pointer {
             width: 0;
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
             border-bottom: 30px solid red;
             position: absolute;
-            transform-origin: 150px 150px; /* Kreisen um die Mitte des Bildes */
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
         }
 
         .wuerfel-container {
@@ -141,12 +130,10 @@
     <img src="2.jpg" alt="Bildname 2" id="header-img">
 
     <div id="game-container">
-        
-        <div id="pointer-container">
-            <div id="pointer"></div>
+        <div id="gluecksrad-container">
+            <div id="fixed-pointer"></div> <!-- Fester Pfeil -->
+            <img src="3.jpeg" alt="Glücksrad" id="gluecksrad-bild"> <!-- Glücksrad-Bild -->
         </div>
-        
-        <img src="3.jpeg" alt="Glücksrad" id="gluecksrad-bild"> <!-- Glücksrad-Bild -->
         
         <button class="btn" id="gluecksradBtn" onclick="startGame()">Spin the Wheel</button>
         
@@ -182,7 +169,7 @@
 
         function startGame() {
             disableButtons();
-            drehePointer();
+            dreheGluecksrad();
         }
 
         function disableButtons() {
@@ -197,22 +184,23 @@
             document.getElementById('wuerfel2Btn').disabled = false;
         }
 
-        function drehePointer() {
-            const pointer = document.getElementById('pointer');
-            const spinDuration = Math.random() * (6 - 5) + 5; // Zufällige Dauer zwischen 5 und 6 Sekunden
-            const rotations = 30 * spinDuration; // 30 Umdrehungen pro Minute (RPM)
+        function dreheGluecksrad() {
+            const gluecksrad = document.getElementById('gluecksrad-bild');
+            const spinDuration = 5; // 5 Sekunden schnelle Drehung
+            const finalDuration = 2; // Verlangsamung für 2 Sekunden
+            const rotations = 30 * spinDuration; // Schnelle Rotation
 
-            pointer.style.transition = `transform ${spinDuration}s linear`;
-            pointer.style.transform = `rotate(${rotations * 360}deg)`;
+            gluecksrad.style.transition = `transform ${spinDuration}s linear`;
+            gluecksrad.style.transform = `rotate(${rotations * 360}deg)`; // Schnelle Drehung
 
             setTimeout(() => {
-                pointer.style.transition = 'transform 2s ease-out';
+                gluecksrad.style.transition = `transform ${finalDuration}s ease-out`;
                 const finalRotation = Math.floor(Math.random() * 360);
-                pointer.style.transform = `rotate(${rotations * 360 + finalRotation}deg)`;
+                gluecksrad.style.transform = `rotate(${rotations * 360 + finalRotation}deg)`; // Verlangsamung zum Stillstand
 
                 setTimeout(() => {
                     document.getElementById('wuerfel1Btn').disabled = false;
-                }, 2000);
+                }, finalDuration * 1000);
 
             }, spinDuration * 1000);
         }
@@ -323,7 +311,7 @@
         }
 
         function resetGame() {
-            document.getElementById('pointer').style.transform = 'rotate(0deg)';
+            document.getElementById('gluecksrad-bild').style.transform = 'rotate(0deg)';
             document.getElementById('dots1-1').innerHTML = '';
             document.getElementById('dots1-2').innerHTML = '';
             document.getElementById('dots2-1').innerHTML = '';
