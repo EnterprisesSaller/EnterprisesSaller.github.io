@@ -1,4 +1,3 @@
-
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -21,8 +20,8 @@
         }
 
         #header-img {
-            width: 104%;
-            max-width: 390px; /* Vergrößerung um 30% */
+            width: 150%; /* Vergrößerung um 50% */
+            max-width: 600px; /* Neue Maximalbreite */
             height: auto;
             margin-top: 20px;
         }
@@ -46,9 +45,9 @@
             height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
-            border-bottom: 30px solid red;
+            border-top: 30px solid red; /* Spitze nach unten */
             position: absolute;
-            top: -45px;
+            top: -25px; /* Näher an das Rad heran */
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -157,7 +156,7 @@
         </div>
         <button class="btn" id="wuerfel2Btn" onclick="wuerfeln2()" disabled>Roll</button>
         
-        <div id="result">Wer gewinnt?</div>
+        <div id="result">Wer zahlt?</div>
         
         <div id="timer"></div>
     </div>
@@ -166,8 +165,11 @@
         let player1Result = 0;
         let player2Result = 0;
         let timer = null;
+        let roundInProgress = false;
 
         function startGame() {
+            if (roundInProgress) return; // Verhindert den Start einer neuen Runde, bevor die aktuelle abgeschlossen ist
+            roundInProgress = true;
             disableButtons();
             dreheGluecksrad();
         }
@@ -178,14 +180,14 @@
             document.getElementById('wuerfel2Btn').disabled = true;
         }
 
-        function enableButtons() {
-            document.getElementById('gluecksradBtn').disabled = false;
+        function enableButton(buttonId) {
+            document.getElementById(buttonId).disabled = false;
         }
 
         function dreheGluecksrad() {
             const gluecksrad = document.getElementById('gluecksrad-bild');
             const initialDuration = 5; // 5 Sekunden für Verlangsamung
-            const initialRPM = 30; // Start bei 30 Umdrehungen pro Minute (RPM)
+            const initialRPM = 60; // Start bei 60 Umdrehungen pro Minute (RPM) -> Erhöhung um 100%
             const finalRPM = 5; // Verlangsamt auf 5 Umdrehungen pro Minute (RPM)
             const initialRotations = initialRPM * initialDuration / 60; // Anzahl der Umdrehungen in der schnellen Phase
             const finalDuration = Math.random() * (2 - 1) + 1; // Zufällige Dauer für den Stillstand
@@ -200,22 +202,24 @@
                 gluecksrad.style.transform = `rotate(${initialRotations * 360 + finalRotation * 360 + finalRotationAngle}deg)`; // Verlangsamung und Zufallsdrehung
 
                 setTimeout(() => {
-                    document.getElementById('wuerfel1Btn').disabled = false; // Spieler 1 kann jetzt würfeln
+                    enableButton('wuerfel1Btn'); // Spieler 1 kann jetzt würfeln
                 }, finalDuration * 1000);
 
             }, initialDuration * 1000);
         }
 
         function wuerfeln1() {
+            if (document.getElementById('wuerfel1Btn').disabled) return; // Verhindert Mehrfachklicks
             disableButtons();
             animateDice('wuerfel1-1', 'dots1-1');
             animateDice('wuerfel1-2', 'dots1-2', function() {
                 player1Result = showDiceResult('wuerfel1-1', 'dots1-1') + showDiceResult('wuerfel1-2', 'dots1-2');
-                document.getElementById('wuerfel2Btn').disabled = false; // Spieler 2 kann jetzt würfeln
+                enableButton('wuerfel2Btn'); // Spieler 2 kann jetzt würfeln
             });
         }
 
         function wuerfeln2() {
+            if (document.getElementById('wuerfel2Btn').disabled) return; // Verhindert Mehrfachklicks
             disableButtons();
             animateDice('wuerfel2-1', 'dots2-1');
             animateDice('wuerfel2-2', 'dots2-2', function() {
@@ -279,13 +283,12 @@
         function zeigeErgebnis() {
             let resultText = '';
             if (player1Result > player2Result) {
-                resultText = 'Spieler 1 gewinnt!';
+                resultText = 'Spieler 2 zahlt!';
             } else if (player1Result < player2Result) {
-                resultText = 'Spieler 2 gewinnt!';
+                resultText = 'Spieler 1 zahlt!';
             } else {
                 resultText = 'Unentschieden! Nochmal würfeln!';
-                document.getElementById('wuerfel1Btn').disabled = false;
-                document.getElementById('wuerfel2Btn').disabled = true;
+                enableButton('wuerfel1Btn');
                 return; // Unentschieden, daher kein Timer-Start
             }
             document.getElementById('result').textContent = resultText;
@@ -314,8 +317,9 @@
             document.getElementById('dots1-2').innerHTML = '';
             document.getElementById('dots2-1').innerHTML = '';
             document.getElementById('dots2-2').innerHTML = '';
-            document.getElementById('result').textContent = 'Wer gewinnt?';
-            enableButtons(); // Nur der Spin-Button wird aktiviert
+            document.getElementById('result').textContent = 'Wer zahlt?';
+            enableButton('gluecksradBtn'); // Nur der Spin-Button wird aktiviert
+            roundInProgress = false;
         }
     </script>
 </body>
