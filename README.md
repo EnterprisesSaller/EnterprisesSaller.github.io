@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -21,8 +21,8 @@
         }
 
         #header-img {
-            width: 80%;
-            max-width: 300px;
+            width: 104%;
+            max-width: 390px; /* Vergrößerung um 30% */
             height: auto;
             margin-top: 20px;
         }
@@ -186,23 +186,26 @@
 
         function dreheGluecksrad() {
             const gluecksrad = document.getElementById('gluecksrad-bild');
-            const spinDuration = 5; // 5 Sekunden schnelle Drehung
-            const finalDuration = 2; // Verlangsamung für 2 Sekunden
-            const rotations = 30 * spinDuration; // Schnelle Rotation
+            const initialDuration = 5; // 5 Sekunden für Verlangsamung
+            const initialRPM = 30; // Start bei 30 Umdrehungen pro Minute (RPM)
+            const finalRPM = 5; // Verlangsamt auf 5 Umdrehungen pro Minute (RPM)
+            const initialRotations = initialRPM * initialDuration / 60; // Anzahl der Umdrehungen in der schnellen Phase
+            const finalDuration = Math.random() * (2 - 1) + 1; // Zufällige Dauer für den Stillstand
+            const finalRotation = finalRPM * finalDuration / 60; // Anzahl der Umdrehungen in der langsamen Phase
 
-            gluecksrad.style.transition = `transform ${spinDuration}s linear`;
-            gluecksrad.style.transform = `rotate(${rotations * 360}deg)`; // Schnelle Drehung
+            gluecksrad.style.transition = `transform ${initialDuration}s linear`;
+            gluecksrad.style.transform = `rotate(${initialRotations * 360}deg)`; // Schnelle Drehung
 
             setTimeout(() => {
                 gluecksrad.style.transition = `transform ${finalDuration}s ease-out`;
-                const finalRotation = Math.floor(Math.random() * 360);
-                gluecksrad.style.transform = `rotate(${rotations * 360 + finalRotation}deg)`; // Verlangsamung zum Stillstand
+                const finalRotationAngle = Math.random() * 360; // Zufälliger Winkel für den Stillstand
+                gluecksrad.style.transform = `rotate(${initialRotations * 360 + finalRotation * 360 + finalRotationAngle}deg)`; // Verlangsamung und Zufallsdrehung
 
                 setTimeout(() => {
                     document.getElementById('wuerfel1Btn').disabled = false;
                 }, finalDuration * 1000);
 
-            }, spinDuration * 1000);
+            }, initialDuration * 1000);
         }
 
         function wuerfeln1() {
