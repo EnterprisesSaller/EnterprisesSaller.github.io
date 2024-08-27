@@ -42,12 +42,11 @@
         #gluecksrad-container {
             position: relative;
             margin: 0 auto;
-            width: 95%;
+            width: 100%; /* Sicherstellung, dass das Rad den verfügbaren Platz einnimmt */
             max-width: 350px;
-            height: 0;
-            padding-bottom: 95%; /* Sicherstellung, dass es ein perfekter Kreis bleibt */
+            height: 350px; /* Sicherstellung der korrekten Höhe */
             background-image: url('3.jpeg');
-            background-size: cover;
+            background-size: 100% 100%; /* Bildfüllung auf die gesamte Containergröße */
             background-position: center;
             border-radius: 50%;
             border: 2px solid white;
