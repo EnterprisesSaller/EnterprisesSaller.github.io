@@ -27,7 +27,7 @@
         }
 
         #header-img {
-            width: 120%; /* Verkleinerung um 20% von vorheriger Größe */
+            width: 100%; /* Verkleinerung um 20% von vorheriger Größe */
             max-width: 480px;
             height: auto;
             margin-top: 20px;
