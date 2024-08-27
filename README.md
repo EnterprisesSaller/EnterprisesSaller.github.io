@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -27,31 +27,42 @@
             position: relative;
         }
 
+        #header-img {
+            width: 80%;
+            max-width: 300px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        #gluecksrad-bild {
+            width: 80%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 50%;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #pointer-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
         #pointer {
             width: 0;
             height: 0;
-            border-left: 22.5px solid transparent;
-            border-right: 22.5px solid transparent;
-            border-top: 45px solid red;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid red;
             position: absolute;
-            top: -35px;
-            left: calc(50% - 22.5px);
-            z-index: 1000;
-        }
-
-        #gluecksrad-container {
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-            max-width: 350px;
-            height: 350px;
-            background-image: url('3.jpeg');
-            background-size: 100% 100%;
-            background-position: center;
-            border-radius: 50%;
-            border: 2px solid white;
-            overflow: hidden;
-            margin-top: -40px;
+            transform-origin: 150px 150px; /* Kreisen um die Mitte des Bildes */
         }
 
         .wuerfel-container {
@@ -90,11 +101,6 @@
             place-self: center;
         }
 
-        #result {
-            margin: 20px auto;
-            font-size: 16px;
-        }
-
         .btn {
             background-color: #555;
             color: white;
@@ -102,9 +108,12 @@
             border: none;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 10px;
+            margin-top: 20px;
             width: 100%;
             max-width: 200px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn:disabled {
@@ -114,6 +123,11 @@
 
         .btn:hover:not(:disabled) {
             background-color: #777;
+        }
+
+        #result {
+            margin: 20px auto;
+            font-size: 16px;
         }
 
         #timer {
@@ -128,11 +142,13 @@
 
     <div id="game-container">
         
-        <div id="pointer"></div> <!-- Feststehender Pfeil -->
+        <div id="pointer-container">
+            <div id="pointer"></div>
+        </div>
         
-        <div id="gluecksrad-container"></div> <!-- Glücksrad-Container -->
+        <img src="3.jpeg" alt="Glücksrad" id="gluecksrad-bild"> <!-- Glücksrad-Bild -->
         
-        <button class="btn" id="gluecksradBtn" onclick="dreheGluecksrad()">Spin the Wheel</button>
+        <button class="btn" id="gluecksradBtn" onclick="startGame()">Spin the Wheel</button>
         
         <div class="wuerfel-container">
             <div class="wuerfel" id="wuerfel1-1">
@@ -160,49 +176,61 @@
     </div>
 
     <script>
-        let segment = 0;
         let player1Result = 0;
         let player2Result = 0;
         let timer = null;
 
-        function dreheGluecksrad() {
-            const gluecksrad = document.getElementById('gluecksrad-container');
+        function startGame() {
+            disableButtons();
+            drehePointer();
+        }
+
+        function disableButtons() {
+            document.getElementById('gluecksradBtn').disabled = true;
+            document.getElementById('wuerfel1Btn').disabled = true;
+            document.getElementById('wuerfel2Btn').disabled = true;
+        }
+
+        function enableButtons() {
+            document.getElementById('gluecksradBtn').disabled = false;
+            document.getElementById('wuerfel1Btn').disabled = false;
+            document.getElementById('wuerfel2Btn').disabled = false;
+        }
+
+        function drehePointer() {
+            const pointer = document.getElementById('pointer');
             const spinDuration = Math.random() * (6 - 5) + 5; // Zufällige Dauer zwischen 5 und 6 Sekunden
             const rotations = 30 * spinDuration; // 30 Umdrehungen pro Minute (RPM)
 
-            // Anfangsdrehung
-            gluecksrad.style.transition = `transform ${spinDuration}s linear`;
-            gluecksrad.style.transform = `rotate(${rotations * 360}deg)`;
+            pointer.style.transition = `transform ${spinDuration}s linear`;
+            pointer.style.transform = `rotate(${rotations * 360}deg)`;
 
-            // Verlangsamung am Ende
             setTimeout(() => {
-                gluecksrad.style.transition = 'transform 2s ease-out';
+                pointer.style.transition = 'transform 2s ease-out';
                 const finalRotation = Math.floor(Math.random() * 360);
-                gluecksrad.style.transform = `rotate(${rotations * 360 + finalRotation}deg)`;
+                pointer.style.transform = `rotate(${rotations * 360 + finalRotation}deg)`;
 
-                // Nach Stillstand die Würfel aktivieren
                 setTimeout(() => {
-                    document.getElementById('gluecksradBtn').disabled = true;
                     document.getElementById('wuerfel1Btn').disabled = false;
-                }, 2000); // Warten, bis das Rad vollständig zum Stillstand kommt
+                }, 2000);
 
-            }, spinDuration * 1000); // Start des Verlangsamens nach der initialen Drehzeit
+            }, spinDuration * 1000);
         }
 
         function wuerfeln1() {
+            disableButtons();
             animateDice('wuerfel1-1', 'dots1-1');
             animateDice('wuerfel1-2', 'dots1-2', function() {
                 player1Result = showDiceResult('wuerfel1-1', 'dots1-1') + showDiceResult('wuerfel1-2', 'dots1-2');
-                document.getElementById('wuerfel1Btn').disabled = true;
                 document.getElementById('wuerfel2Btn').disabled = false;
             });
         }
 
         function wuerfeln2() {
+            disableButtons();
             animateDice('wuerfel2-1', 'dots2-1');
             animateDice('wuerfel2-2', 'dots2-2', function() {
                 player2Result = showDiceResult('wuerfel2-1', 'dots2-1') + showDiceResult('wuerfel2-2', 'dots2-2');
-                document.getElementById('wuerfel2Btn').disabled = true;
                 zeigeErgebnis();
             });
         }
@@ -216,7 +244,7 @@
                     clearInterval(interval);
                     if (callback) callback();
                 }
-            }, 100); // Schnelle Änderung für 3 Sekunden (30 Iterationen à 100ms)
+            }, 100);
         }
 
         function showRandomDots(dotsId) {
@@ -273,6 +301,9 @@
                 document.getElementById('wuerfel2Btn').disabled = true;
             }
             document.getElementById('result').textContent = resultText;
+            if (player1Result !== player2Result) {
+                enableButtons(); // Nur bei einem eindeutigen Ergebnis die Buttons wieder aktivieren
+            }
         }
 
         function startTimer() {
@@ -292,15 +323,13 @@
         }
 
         function resetGame() {
-            document.getElementById('gluecksrad-container').style.transform = 'rotate(0deg)';
+            document.getElementById('pointer').style.transform = 'rotate(0deg)';
             document.getElementById('dots1-1').innerHTML = '';
             document.getElementById('dots1-2').innerHTML = '';
             document.getElementById('dots2-1').innerHTML = '';
             document.getElementById('dots2-2').innerHTML = '';
             document.getElementById('result').textContent = 'Wer gewinnt?';
-            document.getElementById('gluecksradBtn').disabled = false;
-            document.getElementById('wuerfel1Btn').disabled = true;
-            document.getElementById('wuerfel2Btn').disabled = true;
+            enableButtons(); // Buttons nach dem Reset wieder aktivieren
         }
     </script>
 </body>
