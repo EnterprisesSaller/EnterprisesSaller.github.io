@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -180,8 +180,6 @@
 
         function enableButtons() {
             document.getElementById('gluecksradBtn').disabled = false;
-            document.getElementById('wuerfel1Btn').disabled = false;
-            document.getElementById('wuerfel2Btn').disabled = false;
         }
 
         function dreheGluecksrad() {
@@ -202,7 +200,7 @@
                 gluecksrad.style.transform = `rotate(${initialRotations * 360 + finalRotation * 360 + finalRotationAngle}deg)`; // Verlangsamung und Zufallsdrehung
 
                 setTimeout(() => {
-                    document.getElementById('wuerfel1Btn').disabled = false;
+                    document.getElementById('wuerfel1Btn').disabled = false; // Spieler 1 kann jetzt würfeln
                 }, finalDuration * 1000);
 
             }, initialDuration * 1000);
@@ -213,7 +211,7 @@
             animateDice('wuerfel1-1', 'dots1-1');
             animateDice('wuerfel1-2', 'dots1-2', function() {
                 player1Result = showDiceResult('wuerfel1-1', 'dots1-1') + showDiceResult('wuerfel1-2', 'dots1-2');
-                document.getElementById('wuerfel2Btn').disabled = false;
+                document.getElementById('wuerfel2Btn').disabled = false; // Spieler 2 kann jetzt würfeln
             });
         }
 
@@ -222,7 +220,7 @@
             animateDice('wuerfel2-1', 'dots2-1');
             animateDice('wuerfel2-2', 'dots2-2', function() {
                 player2Result = showDiceResult('wuerfel2-1', 'dots2-1') + showDiceResult('wuerfel2-2', 'dots2-2');
-                zeigeErgebnis();
+                zeigeErgebnis(); // Ergebnis anzeigen und nächste Schritte einleiten
             });
         }
 
@@ -282,19 +280,16 @@
             let resultText = '';
             if (player1Result > player2Result) {
                 resultText = 'Spieler 1 gewinnt!';
-                startTimer();
             } else if (player1Result < player2Result) {
                 resultText = 'Spieler 2 gewinnt!';
-                startTimer();
             } else {
                 resultText = 'Unentschieden! Nochmal würfeln!';
                 document.getElementById('wuerfel1Btn').disabled = false;
                 document.getElementById('wuerfel2Btn').disabled = true;
+                return; // Unentschieden, daher kein Timer-Start
             }
             document.getElementById('result').textContent = resultText;
-            if (player1Result !== player2Result) {
-                enableButtons(); // Nur bei einem eindeutigen Ergebnis die Buttons wieder aktivieren
-            }
+            startTimer(); // Timer starten, wenn kein Unentschieden
         }
 
         function startTimer() {
@@ -308,7 +303,7 @@
                 } else {
                     clearInterval(timer);
                     document.getElementById('timer').textContent = '';
-                    resetGame();
+                    resetGame(); // Buttons werden erst nach dem Reset aktiviert
                 }
             }, 1000);
         }
@@ -320,7 +315,7 @@
             document.getElementById('dots2-1').innerHTML = '';
             document.getElementById('dots2-2').innerHTML = '';
             document.getElementById('result').textContent = 'Wer gewinnt?';
-            enableButtons(); // Buttons nach dem Reset wieder aktivieren
+            enableButtons(); // Nur der Spin-Button wird aktiviert
         }
     </script>
 </body>
