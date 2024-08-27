@@ -1,4 +1,3 @@
-
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -27,8 +26,8 @@
         }
 
         #header-img {
-            width: 100%; /* Verkleinerung um 20% von vorheriger Größe */
-            max-width: 480px;
+            width: 100%; /* Weitere Verkleinerung um 17.5% von vorheriger Größe */
+            max-width: 396px; /* Neue Maximalbreite entsprechend der Reduktion */
             height: auto;
             margin-top: 20px;
         }
@@ -294,8 +293,9 @@
             } else if (player1Result < player2Result) {
                 resultText = 'Spieler 1 zahlt!';
             } else {
-                resultText = 'Unentschieden! Nochmal würfeln!';
+                resultText = 'Deuce - roll again';
                 enableButton('wuerfel1Btn');
+                document.getElementById('result').textContent = resultText;
                 return; // Unentschieden, daher kein Timer-Start
             }
             document.getElementById('result').textContent = resultText;
