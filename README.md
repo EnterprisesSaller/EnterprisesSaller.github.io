@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -42,16 +42,15 @@
         #gluecksrad-container {
             position: relative;
             margin: 0 auto;
-            width: 100%; /* Sicherstellung, dass das Rad den verfügbaren Platz einnimmt */
+            width: 100%;
             max-width: 350px;
-            height: 350px; /* Sicherstellung der korrekten Höhe */
+            height: 350px;
             background-image: url('3.jpeg');
-            background-size: 100% 100%; /* Bildfüllung auf die gesamte Containergröße */
+            background-size: 100% 100%;
             background-position: center;
             border-radius: 50%;
             border: 2px solid white;
             overflow: hidden;
-            transition: transform 6s ease-out;
             margin-top: -40px;
         }
 
@@ -167,13 +166,27 @@
         let timer = null;
 
         function dreheGluecksrad() {
-            let rotation = Math.floor(Math.random() * 3600) + 720; // Mehrfache Umdrehungen für den Effekt
-            document.getElementById('gluecksrad-container').style.transform = 'rotate(' + rotation + 'deg)';
+            const gluecksrad = document.getElementById('gluecksrad-container');
+            const spinDuration = Math.random() * (6 - 5) + 5; // Zufällige Dauer zwischen 5 und 6 Sekunden
+            const rotations = 30 * spinDuration; // 30 Umdrehungen pro Minute (RPM)
 
-            setTimeout(function() {
-                document.getElementById('gluecksradBtn').disabled = true;
-                document.getElementById('wuerfel1Btn').disabled = false;
-            }, 6000); // Zeit, bis das Glücksrad zum Stillstand kommt
+            // Anfangsdrehung
+            gluecksrad.style.transition = `transform ${spinDuration}s linear`;
+            gluecksrad.style.transform = `rotate(${rotations * 360}deg)`;
+
+            // Verlangsamung am Ende
+            setTimeout(() => {
+                gluecksrad.style.transition = 'transform 2s ease-out';
+                const finalRotation = Math.floor(Math.random() * 360);
+                gluecksrad.style.transform = `rotate(${rotations * 360 + finalRotation}deg)`;
+
+                // Nach Stillstand die Würfel aktivieren
+                setTimeout(() => {
+                    document.getElementById('gluecksradBtn').disabled = true;
+                    document.getElementById('wuerfel1Btn').disabled = false;
+                }, 2000); // Warten, bis das Rad vollständig zum Stillstand kommt
+
+            }, spinDuration * 1000); // Start des Verlangsamens nach der initialen Drehzeit
         }
 
         function wuerfeln1() {
